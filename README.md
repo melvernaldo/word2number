@@ -42,38 +42,67 @@ print(word2number("OnE BiLLioN"))
 
 ### Notes
 
+- If the input is not a string or an iterable containing _only_ strings, the function will raise a `TypeError` and stops the program.
+
+```
+print(word2number(3))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/user/code/python/word2number/word2number.py", line 149, in word2number
+    raise TypeError("This function only accepts string or list of strings!")
+TypeError: This function only accepts string or list of strings!
+```
+
+```
+print(word2number( ["One", "two", 3] ))
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+  File "/home/user/code/python/word2number/word2number.py", line 147, in word2number
+    raise TypeError("This function only accepts string or list of strings!")
+TypeError: This function only accepts string or list of strings!
+```
+
 - The string 'nan' (case insensitive) will be parsed as Numpy's NaN.
   Examples:
+
   ```
   word2number('nan')
   nan
   ```
+
   ```
   word2number('NaN')
   nan
   ```
+
 - An empty string will be parsed as the integer 0
   Examples:
+
   ```
   word2number('')
   0
   ```
+
   ```
   word2number(['three', ''])
   [3, 0]
   ```
+
 - Any words that can't be individually parsed as a number will be ignored and trigger
   a runtime warning but will still returns the parsed integer/s.
   Examples:
+
   ```
   print(word2number('test'))
   <stdin>:1: RuntimeWarning: One or more invalid words are ignored! Check your input!
   0
   ```
+
   ```
   print(word2number('Three Ligmas'))
   <stdin>:1: RuntimeWarning: One or more invalid words are ignored! Check your input!
   3
   ```
+
 - The word 'and' is an exception of the last point. It will be ignored but
   will not trigger a warning.
