@@ -1,10 +1,14 @@
 # word2number
 
-This is a python module to convert worded numbers ("Three hundred and eleven") to an integer (12). This works for positive and negative integers up to 999,999,999,999,999 (10^12 - 1) and down to its negative. The module contains the `word2number` function that is intended for use. Other functions in the module are for the `word2number` function to access.
+This is a python module to convert worded numbers ("Three hundred and eleven") to an integer (12). This works for positive and negative integers up to 999,999,999,999,999 (10^12 - 1) and down to its negative.
 
-The main function `word2number` of this module can receive an iterable object of strings, e.g. list of strings or Numpy's array of strings which it then returns a list of parsed integers. It can also receive just a string, which will return the parsed integer. The input of the function is case-insensitive.
+The module contains the `word2number` function that is intended for use. Other functions in the module are for the `word2number` function to access.
 
-This module requires Numpy if the input string is 'nan' which will return Numpy's NaN.
+The main function `word2number` of this module can receive an iterable object of strings, e.g. list of strings or Numpy's array of strings which it then returns a list of parsed integers. It can also receive just a string, which will return the parsed integer.
+
+The input of the function is case-insensitive.
+
+This module might require Numpy if the input string is 'nan' which will return Numpy's NaN.
 
 ## Usage
 
@@ -40,12 +44,24 @@ print(word2number("OnE BiLLioN"))
 
 - The string 'nan' (case insensitive) will be parsed as Numpy's NaN.
   Examples:
-  - word2number('nan') -> np.NaN
-  - word2number('NaN') -> np.NaN
+  ```
+  word2number('nan')
+  nan
+  ```
+  ```
+  word2number('NaN')
+  nan
+  ```
 - An empty string will be parsed as the integer 0
   Examples:
-  - word2number('') -> 0
-  - word2number(['three', '']) - [3, 0]
+  ```
+  word2number('')
+  0
+  ```
+  ```
+  word2number(['three', ''])
+  [3, 0]
+  ```
 - Any words that can't be individually parsed as a number will be ignored and trigger
   a runtime warning but will still returns the parsed integer/s.
   Examples:
