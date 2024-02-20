@@ -56,11 +56,16 @@ def _word2number(words):
     for word in words_array:
         number_array.append(parseNumberFromWord(word))
 
+    exist_ignored_words = False
     while None in number_array:
-        warnings.warn("One or more invalid words are ignored! Check your input!", RuntimeWarning, stacklevel=3)
+        exist_ignored_words = True
         number_array.remove(None)
 
+    if exist_ignored_words:
+        warnings.warn("One or more invalid words were ignored! Check your input!", RuntimeWarning, stacklevel=3)
+
     # Parse the integer from the array of numbers
+    # This try-except pass is a work-around so the function doesn't crash if given an empty string
     negative = False
     try:
         if number_array[0] == -1:
@@ -79,8 +84,9 @@ def _word2number(words):
             multiplier *= i
         else:
             number += i * multiplier
+            
     if negative:
-        number = -number
+        return -number
     return number
 
 
@@ -137,20 +143,16 @@ def word2number(words_list):
       will not trigger a warning.
     """
     
-    # Check if the input is a string of an iterable object containing only strings
     if isinstance(words_list, str):
         return _word2number(words_list)
     
-    if isinstance(words_list, Iterable):
-        for word in words_list:
-            if not isinstance(word, str):
-                raise TypeError("This function only accepts string or list of strings!")
-    else:
+    if not isinstance(words_list, Iterable):
         raise TypeError("This function only accepts string or list of strings!")
-            
-        
         
     parsed_numbers = []
     for word in words_list:
+        if not isinstance(word, str):
+            raise TypeError("This function only accepts string or list of strings!")
         parsed_numbers.append(_word2number(word))
+    
     return parsed_numbers
